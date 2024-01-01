@@ -13,5 +13,8 @@
     "Backend"
   ],
   "author": "Prince Chaurasia",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.1.1"
+  }
 }
