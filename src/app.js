@@ -17,7 +17,16 @@ app.use(express.static("public")); // storing assets/static files in public dire
 app.use(cookieParser())
 
 
-export default app;
+// routes import
+
+import userRouter from "./routes/user.routes.js"
+
+
+// route declaration
+
+app.use("/api/v1/users", userRouter);
+
+export default app; 
 
 
 //middleware: medium or tool to verify req and responses
