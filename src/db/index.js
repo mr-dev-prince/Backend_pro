@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import chalk from "chalk";
 import { DB_NAME } from "../../conjurring.js";
 
 const connectDB = async () => {
@@ -7,12 +8,15 @@ const connectDB = async () => {
       `${process.env.MONGODB_URI}/${DB_NAME}`
     );
     console.log(
-      `\n MongoDB connected ! DB HOST ${connectionInstance.connection.host}`
+      `\n ${chalk.green("MongoDB connected !")} ! DB HOST ${chalk.blue(
+        connectionInstance.connection.host
+      )}`
     );
   } catch (error) {
-    console.log("MONGODB connection FAILED", error);
+    console.log(`${chalk.red("MongoDB connection failed")}`, error);
     process.exit(1);
   }
 };
 
 export default connectDB;
+   
