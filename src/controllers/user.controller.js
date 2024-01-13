@@ -33,6 +33,9 @@ const registerUser = asyncHandler(async (req, res) => {
   // check for user creation
   // return response
 
+  console.log('This is body ----\n',req.body);
+  console.log('this is files ----\n',req.files);
+  
   const { fullname, email, username, password } = req.body;
 
   if (
@@ -48,6 +51,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (existedUser) {
     throw new ApiError(409, "User already Exist !");
   }
+
 
   const avatarLocalPath = req.files?.avatar[0]?.path;
   //   const coverImageLocalPath = req.files?.coverImage[0]?.path;
@@ -72,15 +76,16 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Avatar required");
   }
 
+  
   const user = await User.create({
     fullname,
     avatar: avatar.url,
     coverImage: coverImage?.url || "",
     email,
     password,
-    username: username.toLowerCase(),
+    username:username.toLowerCase()
   });
-
+  
   const createdUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );
@@ -95,20 +100,19 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-  //   req.body -> data
+  // req.body -> data
   // username or email
   // find the user
   // password check
   // access and refresh token
   // send cookies
-
+  console.log("hello");
   const { email, username, password } = req.body;
-  console.log(email);
-
+  
   if (!username && !email) {
     throw new ApiError(400, "usename or email is required !");
   }
-
+  
   const user = await User.findOne({
     $or: [{ username }, { email }],
   });
